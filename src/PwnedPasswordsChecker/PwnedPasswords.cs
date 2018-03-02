@@ -19,7 +19,7 @@ namespace PwnedPasswordsChecker
 
         public PwnedPasswords(HttpClient httpClient)
         {
-            this.httpClient = httpClient;
+            this.httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
         }
 
         public async Task<bool> IsPwnedAsync(string password)
@@ -31,6 +31,11 @@ namespace PwnedPasswordsChecker
 
         public async Task<int> PwnedCountAsync(string password)
         {
+             if (string.IsNullOrWhiteSpace(password))
+            {
+                throw new ArgumentException("Password cannot be null or whitespace.", nameof(password));
+            }
+
             var fullPasswordHash = this.GetSha1Hash(password);
             var hashPrefix = fullPasswordHash.Substring(0, 5);
 
