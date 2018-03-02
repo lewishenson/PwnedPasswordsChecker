@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PwnedPasswordsChecker
 {
-    public class PwnedPasswords
+    public class PwnedPasswords : IPwnedPasswords
     {
         private readonly HttpClient httpClient;
 
